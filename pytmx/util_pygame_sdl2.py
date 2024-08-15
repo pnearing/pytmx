@@ -1,5 +1,5 @@
 """
-Copyright (C) 2012-2024, Leif Theden <leif.theden@gmail.com>
+Copyright (C) 2012-2022, Leif Theden <leif.theden@gmail.com>
 
 This file is part of pytmx.
 
@@ -19,7 +19,7 @@ License along with pytmx.  If not, see <http://www.gnu.org/licenses/>.
 import dataclasses
 import logging
 from functools import partial
-from typing import Any, Optional
+from typing import Tuple
 
 from pygame.rect import Rect
 
@@ -28,8 +28,8 @@ import pytmx
 logger = logging.getLogger(__name__)
 
 try:
+    from pygame._sdl2 import Texture, Image, Renderer, Window
     import pygame
-    from pygame._sdl2 import Image, Renderer, Texture, Window
 except ImportError:
     logger.error("cannot import pygame (is it installed?)")
     raise
@@ -39,14 +39,14 @@ except ImportError:
 class PygameSDL2Tile:
     texture: Texture
     srcrect: Rect
-    size: tuple[int, int]
+    size: Tuple[int, int]
     angle: float = 0.0
     center: None = None
     flipx: bool = False
     flipy: bool = False
 
 
-def handle_flags(flags: Optional[pytmx.TileFlags]) -> tuple[float, bool, bool]:
+def handle_flags(flags: pytmx.TileFlags):
     """
     Return angle and flip values for the SDL2 renderer
 
@@ -94,9 +94,7 @@ def pygame_sd2_image_loader(renderer: Renderer, filename: str, colorkey, **kwarg
     return load_image
 
 
-def load_pygame_sdl2(
-    renderer: Renderer, filename: str, *args: Any, **kwargs: Any
-) -> pytmx.TiledMap:
+def load_pygame_sdl2(renderer: Renderer, filename: str, *args, **kwargs):
     """
     Load a TMX file, images, and return a TiledMap class
 
