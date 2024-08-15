@@ -17,6 +17,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with pytmx.  If not, see <https://www.gnu.org/licenses/>.
 
 """
+
 from __future__ import annotations
 
 import gzip
@@ -1498,7 +1499,7 @@ class TiledObject(TiledElement):
         self.id = 0
         self.name = None
         self.type = None
-        self.object_type = 'rectangle'
+        self.object_type = "rectangle"
         self.x = 0
         self.y = 0
         self.width = 0
@@ -1571,22 +1572,22 @@ class TiledObject(TiledElement):
 
         text = node.find("text")
         if text is not None:
-            self.object_type = 'text'
+            self.object_type = "text"
             # NOTE: The defaults have been taken from the tiled editor version 1.11.0
-            setattr(self, 'text', text.text)
-            setattr(self, 'font_family', text.get('fontfamily', 'Sans Serif'))
+            setattr(self, "text", text.text)
+            setattr(self, "font_family", text.get("fontfamily", "Sans Serif"))
             # Not sure if this is really font size or not, but it's called
             # pixel size in the .tmx file.
-            setattr(self, 'pixel_size', int(text.get('pixelsize', 16)))
-            setattr(self, 'wrap', bool(text.get('wrap', False)))
-            setattr(self, 'bold', bool(text.get('bold', False)))
-            setattr(self, 'italic', bool(text.get('italic', False)))
-            setattr(self, 'underline', bool(text.get('underline', False)))
-            setattr(self, 'strike_out', bool(text.get('strikeout', False)))
-            setattr(self, 'kerning', bool(text.get('kerning', True)))
-            setattr(self, 'h_align', text.get('halign', 'left'))
-            setattr(self, 'v_align', text.get('valign', 'top'))
-            setattr(self, 'color', text.get("color", "#000000FF"))
+            setattr(self, "pixel_size", int(text.get("pixelsize", 16)))
+            setattr(self, "wrap", bool(text.get("wrap", False)))
+            setattr(self, "bold", bool(text.get("bold", False)))
+            setattr(self, "italic", bool(text.get("italic", False)))
+            setattr(self, "underline", bool(text.get("underline", False)))
+            setattr(self, "strike_out", bool(text.get("strikeout", False)))
+            setattr(self, "kerning", bool(text.get("kerning", True)))
+            setattr(self, "h_align", text.get("halign", "left"))
+            setattr(self, "v_align", text.get("valign", "top"))
+            setattr(self, "color", text.get("color", "#000000FF"))
 
         if points:
             x1 = x2 = y1 = y2 = 0
