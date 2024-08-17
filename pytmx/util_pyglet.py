@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Copyright (C) 2012-2017, Leif Theden <leif.theden@gmail.com>
+Copyright (C) 2012-2024, Leif Theden <leif.theden@gmail.com>
 
 This file is part of pytmx.
 
@@ -46,7 +46,7 @@ def pyglet_image_loader(filename, colorkey, **kwargs):
     if colorkey:
         logger.debug("colorkey not implemented")
 
-    image = pyglet.image.load(filename)
+    image = pyglet.resource.image(filename)
 
     def load_image(rect=None, flags=None):
         if rect:
