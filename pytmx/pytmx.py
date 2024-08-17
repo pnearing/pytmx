@@ -1023,6 +1023,15 @@ class TiledMap(TiledElement):
             if colliders:
                 yield gid, colliders
 
+    def get_tile_flags_by_gid(self, gid: int) -> TileFlags:
+        real_gid = self.tiledgidmap[gid]
+        flags_list = self.gidmap[real_gid]
+        for tile_gid, flags in flags_list:
+            if gid == tile_gid:
+                return flags
+
+
+
     def pixels_to_tile_pos(self, position: tuple[int, int]) -> tuple[int, int]:
         return int(position[0] / self.tilewidth), int(position[1] / self.tileheight)
 
