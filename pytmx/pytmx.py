@@ -1030,8 +1030,6 @@ class TiledMap(TiledElement):
             if gid == tile_gid:
                 return flags
 
-
-
     def pixels_to_tile_pos(self, position: tuple[int, int]) -> tuple[int, int]:
         return int(position[0] / self.tilewidth), int(position[1] / self.tileheight)
 
@@ -1113,7 +1111,6 @@ class TiledMap(TiledElement):
             flags = TileFlags(0, 0, 0)
 
         if tiled_gid:
-
             try:
                 return self.imagemap[(tiled_gid, flags)][0]
             except KeyError:
@@ -1123,6 +1120,7 @@ class TiledMap(TiledElement):
                 self.gidmap[tiled_gid].append((gid, flags))
                 self.tiledgidmap[gid] = tiled_gid
                 return gid
+                
         else:
             return 0
 
