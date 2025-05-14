@@ -1554,7 +1554,7 @@ class TiledObject(TiledElement):
 
         # correctly handle "tile objects" (object with gid set)
         if self.gid:
-            self.object_type = "tile"
+            self.object_type = "tile"  # set the object type to tile
             self.gid = self.parent.register_gid_check_flags(self.gid)
 
         points = None
@@ -1611,6 +1611,16 @@ class TiledObject(TiledElement):
             self.width = abs(x1) + abs(x2)
             self.height = abs(y1) + abs(y2)
             self.points = tuple([Point(i[0] + self.x, i[1] + self.y) for i in points])
+        # Set the points for a rectangle
+        elif self.object_type == "rectangle":
+            self.points = tuple(
+                [
+                    Point(self.x, self.y),
+                    Point(self.x + self.width, self.y),
+                    Point(self.x + self.width, self.y + self.height),
+                    Point(self.x, self.y + self.height),
+                ]
+            )
 
         return self
 
