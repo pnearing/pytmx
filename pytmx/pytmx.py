@@ -47,6 +47,7 @@ __all__ = (
     "TiledElement",
     "TiledImageLayer",
     "TiledMap",
+    "TiledGroupLayer",
     "TiledObject",
     "TiledObjectGroup",
     "TiledTileLayer",
