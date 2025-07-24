@@ -1599,18 +1599,9 @@ class TiledObject(TiledElement):
             self.color = text.get("color", "#000000FF")
 
         if points:
-            x1 = x2 = y1 = y2 = 0
-            for x, y in points:
-                if x < x1:
-                    x1 = x
-                if x > x2:
-                    x2 = x
-                if y < y1:
-                    y1 = y
-                if y > y2:
-                    y2 = y
-            self.width = abs(x1) + abs(x2)
-            self.height = abs(y1) + abs(y2)
+            xs, ys = zip(*points)
+            self.width = max(xs) - min(xs)
+            self.height = max(ys) - min(ys)
             self.points = tuple([Point(i[0] + self.x, i[1] + self.y) for i in points])
         # Set the points for a rectangle
         elif self.object_type == "rectangle":
