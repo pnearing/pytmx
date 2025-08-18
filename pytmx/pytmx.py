@@ -623,6 +623,10 @@ class TiledMap(TiledElement):
 
         # iterate through tile objects and handle the image
         for o in [o for o in self.objects if o.gid]:
+            # Decode rotation and flipping flags from the GID
+            gid, flags = decode_gid(o.gid)
+            rotation = self.get_rotation_from_flags(flags)  # Get rotation based on flags
+
             # gids might also have properties assigned to them
             # in that case, assign the gid properties to the object as well
             p = self.get_tile_properties_by_gid(o.gid)
@@ -630,12 +634,32 @@ class TiledMap(TiledElement):
                 for key in p:
                     o.properties.setdefault(key, p[key])
 
+            # Adjust based on rotation
+            if rotation == 90:
+                o.x, o.y = o.x + o.height, o.y
+            elif rotation == 180:
+                o.x, o.y = o.x + o.width, o.y + o.height
+            elif rotation == 270:
+                o.x, o.y = o.x, o.y + o.width
+
+            # Adjust Y-coordinate if invert_y is enabled
             if self.invert_y:
                 o.y -= o.height
 
         self.reload_images()
         return self
-
+    
+    def get_rotation_from_flags(self, flags: TileFlags) -> int:
+        """Determine the rotation angle from TileFlags."""
+        if flags.flipped_diagonally:
+            if flags.flipped_horizontally and not flags.flipped_vertically:
+                return 90
+            elif flags.flipped_horizontally and flags.flipped_vertically:
+                return 180
+            elif not flags.flipped_horizontally and flags.flipped_vertically:
+                return 270
+        return 0
+    
     def reload_images(self) -> None:
         """Load or reload the map images from disk.
 
